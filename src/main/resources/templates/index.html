@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>ZAICCI</title>
+    <meta name="keywords"  content="网站关键字" />
+    <meta name="description" content="网站描述" />
+    <link rel="stylesheet" href="/js/css/layui.css" media="all">
+    <link rel="stylesheet" href="/css/index.css" media="all">
+
+</head>
+<body>
+<!--头部-->
+<header class="layui-header header header-doc" winter="">
+    <div class="layui-main">
+        <a class="logo" href="/">
+            <img src="/images/custom/logo.png" alt="ZAICCI">
+        </a>
+        <ul class="layui-nav" lay-filter="">
+            <li class="layui-nav-item  layui-this"><a href="#">网站首页&nbsp;|&nbsp;HOME</a></li>
+            <li class="layui-nav-item"><a href="/about">公司简介&nbsp;|&nbsp;ABOUT</a></li>
+            <li class="layui-nav-item"><a href="productShow">产品中心&nbsp;|&nbsp;NEWS</a></li>
+            <!--<li class="layui-nav-item"><a href="">阿里巴巴批发&nbsp;|&nbsp;</a></li>
+            <li class="layui-nav-item"><a href="">阿里旺铺&nbsp;|&nbsp;1688.com</a></li>-->
+            <li class="layui-nav-item"><a href="#contact">联系我们&nbsp;|&nbsp;CONTACT</a></li>
+        </ul>
+    </div>
+</header>
+
+<content>
+    <div id="imgShow">
+        <div class="layui-carousel" id="loopImg">
+            <div carousel-item id="topshowImgs">
+                <div><img src="" alt="暂无商品"/></div>
+                <div><img src="" class="topshowImg" alt="暂无商品"/></div>
+                <div><img src="" class="topshowImg" alt="暂无商品"/></div>
+                <div><img src="" class="topshowImg" alt="暂无商品"/></div>
+                <div><img src="" class="topshowImg" alt="暂无商品"/></div>
+            </div>
+        </div>
+    </div>
+    <div id="productShow" style="margin:0 auto;width:80%;text-align:center;padding:15px;">
+        <div style="color:red;font-size:30px;height:60px;font-family:  'Microsoft YaHei UI';"> 产品中心</div>
+        <div id="laa" type="title" class="cstlayer" style=" z-index: 123; height: 45px;text-align:center">
+            <div class="wp-title_content"
+                 style="margin:0 auto;font-family: Microsoft YaHei; color: rgb(153, 153, 153);word-wrap: break-word; padding: 0px; border-color: rgb(102, 102, 102); border-width: 3px; height: 39px; width: 216px; display: block; border-style: solid;">
+                <br>
+                中国高端箱包皮具领导者
+            </div>
+            <div class="wp-title_content"
+                 style="position: relative;top: -70px;left: 46%;word-wrap: break-word; padding: 10px; border-color: transparent; border-width: 0px; height: 29px; width: 80px; display: block; border-style: solid; background-color: rgb(255, 255, 255);">
+                <span style="font-size: 18px;">产品中心</span>
+            </div>
+        </div>
+
+        <div class="layui-row" id="products">
+
+        </div>
+        <div id="productPage"></div>
+    </div>
+    <div id="contact" style="margin:0 auto;text-align:center">
+        <div style="color:red;font-size:30px;height:60px;font-family:  'Microsoft YaHei UI';"> CONTACT US LEATHER</div>
+        <div  class="cstlayer" style=" z-index: 123; height: 45px;text-align:center">
+            <div class="wp-title_content"
+                 style="margin:0 auto;font-family: Microsoft YaHei; color: rgb(153, 153, 153);word-wrap: break-word; padding: 0px; border-color: rgb(102, 102, 102); border-width: 3px; height: 39px; width: 216px; display: block; border-style: solid;">
+                <br>
+                中国高端箱包皮具领导者
+            </div>
+            <div class="wp-title_content"
+                 style="position: relative;top: -70px;left: 46%;word-wrap: break-word; padding: 10px; border-color: transparent; border-width: 0px; height: 29px; width: 80px; display: block; border-style: solid; background-color: rgb(255, 255, 255);">
+                <span style="font-size: 18px;">联系我们</span>
+            </div>
+        </div>
+        <div style="z-index: 122;  height: 62px;text-align:center;padding:20px;font-family: Times New Roman;  color: rgb(51, 51, 51);" >
+                <p style="padding-bottom: 15px;font-size: 36px;">
+                    <em>+186-8889-8048</em>
+                </p>
+                <p>E-MAIL: 358319393@QQ.COM</p>
+                <p>保定市工业园南合一街15号</p>
+        </div>
+
+    </div>
+
+</content>
+
+<footer>
+    <div class="layui-main footer">
+        <p>Copyright © 2019 All rights reserved&nbsp; © Baoding Zainuo Trading Co., Ltd</p>
+        <p>
+            <a href="#contact" target="_blank">联系我们</a>
+            <!--<a href="http://fly.layui.com/jie/3147/" target="_blank">支持</a>
+            <a href="javascript:;" site-event="contactInfo">联系</a>
+            <a href="https://github.com/sentsin/layui/" target="_blank" rel="nofollow">GitHub</a>
+            <a href="https://gitee.com/sentsin/layui" target="_blank" rel="nofollow">码云</a>
+            <a href="http://fly.layui.com/jie/2461/" target="_blank">公众号</a>
+            <a href="http://www.miitbeian.gov.cn/" target="_blank" rel="nofollow">赣ICP备13006272号-2</a>
+            -->
+        </p>
+        <!--<p class="site-union">
+            <a href="https://www.upyun.com?from=layui" target="_blank" rel="nofollow" upyun=""><img src="//res.layui.com/static/images/other/upyun.png?t=1" alt="upyun"></a>
+            <span>提供 CDN 赞助</span>
+        </p>-->
+    </div>
+    </div>
+</footer>
+</body>
+</html>
+<script src="/js/layui.js?t=1542630986934"></script>
+<!--需要增加th：line标签才可使用thymleaf 模板-->
+<script th:inline="javascript">
+    layui.config({
+        version: '1542630986934' //为了更新 js 缓存，可忽略
+    });
+
+    layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element', 'slider'], function () {
+        varlaydate = layui.laydate//日期
+            , laypage = layui.laypage//分页
+            , layer = layui.layer//弹层
+            , table = layui.table//表格
+            , carousel = layui.carousel//轮播
+            , upload = layui.upload//上传
+            , element = layui.element//元素操作
+            , slider = layui.slider//滑块
+        var $ = layui.jquery;
+
+        //获取后台数据填充轮播图
+        $.get("/topproducts?page=1&limit=5&topshow=是", function (res, status) {
+            if (res.data == null) return;
+            var datas = res.data;
+            datas.forEach(function (data, index) {
+                if (data.mainPic != null && data.mainPic.length > 0) {
+                    $("#topshowImgs img")[index].src = '/upload/download?fileName=' + encodeURIComponent(data.mainPic);
+                }
+            });
+            //执行一个轮播实例
+            carousel.render({
+                elem: '#loopImg'
+                , width: '100%'//设置容器宽度
+                , height: "300px"
+                , arrow: 'none' //不显示箭头
+                , anim: 'fade' //切换动画方式
+            });
+        });
+
+        //产品数据填充
+        fillProduct(1);
+
+        //查询指定页数的产品
+        $.get("/countTopproducts?topshow=否", function (res, status) {
+            if(res>1) {//加载第一页时加载分页
+                laypage.render({
+                    elem: 'productPage'
+                    , count: res
+                    , theme: '#1E9FFF'
+                    //,layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']
+                    , layout: ['count', 'prev', 'page', 'next', 'limit']
+                    , jump: function (obj) {
+                        console.log(obj);
+                        fillProduct(obj.curr);
+                    }
+                });
+            }
+        });
+        function fillProduct(page){
+            $.get("/topproducts?limit=6&topshow=否&page="+page, function (res, status) {
+                if (res.data == null) return;
+                var datas = res.data;
+                productCount = res.count;
+                $("#products").empty()
+                datas.forEach(function (data, index) {
+                    if (data.mainPic != null && data.mainPic.length > 0) {
+                        $("#products").append("<div class=\"productShow layui-col-xs6 layui-col-sm6 layui-col-md4\">" +
+                            "<image class=\"imgProduct\" src=\"/upload/download?fileName=" + encodeURIComponent(data.mainPic) + "\" alt=\"bao\" />" +
+                            "</div>");
+                    }
+                });
+            });
+        }
+    });
+
+</script>

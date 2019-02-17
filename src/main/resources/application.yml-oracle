@@ -1,0 +1,27 @@
+#tomcat
+server:
+ port: 9999
+ 
+#db
+spring:
+ datasource:
+  url: jdbc:oracle:thin:@localhost:1521:orcl
+  username: springLearn
+  password: springLearn
+  driver-class-name: oracle.jdbc.driver.OracleDriver
+ thymleaf:
+  cache: false
+#thymleaf
+  
+#MyBatis
+mybatis:
+ configuration:
+  map-underscope-to-camel-case: true
+  
+#log
+logging:
+ level.root: info
+ level:.cn.feiruishu: debug
+ 
+
+ 

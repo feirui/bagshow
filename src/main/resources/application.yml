@@ -1,0 +1,31 @@
+#tomcat
+server:
+ port: 9999
+ 
+#db
+spring:
+ datasource:
+  url: jdbc:mysql://localhost:3306/feiruishu?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+  username: ENC(SboLgtK7w5PqXExqeQBUJPOo9DYfmmEh)
+  password: ENC(RWQ318OnuagpG0+P6o9c1bsXBY2a6Lw1)
+  driver-class-name: com.mysql.jdbc.Driver
+ thymleaf:
+  cache: false
+#thymleaf
+  
+#MyBatis
+mybatis:
+ configuration:
+  map-underscope-to-camel-case: true
+  
+#log
+logging:
+ level.root: info
+ level:.cn.feiruishu: debug
+#encry
+jasypt:
+ encryptor:
+  password: feiruishu
+
+#自定义配置
+storagepath: D:/spring/feiruishu/

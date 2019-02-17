@@ -1,0 +1,11 @@
+#tomcat
+server.port=9999
+#database
+spring.database.url=jdbc:mysql://localhost:3306/feiruishu
+spring.database.username=feiruishu
+spring.database.password=feiruishu
+spring.database.driver-class-name=com.mysql.jdbc.Driver
+spring.jpa.database=feiruishu
+
+security.user.name=root
+security.user.password=root

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>产品管理</title>
+    <link rel="stylesheet" href="/js/css/layui.css" media="all">
+    <style>
+        body {
+            margin: 10px;
+        }
+
+        .demo-carousel {
+            height: 200px;
+            line-height: 200px;
+            text-align: center;
+        }
+
+        .layui-upload-img {
+            width: 300px;
+            height: 300px;
+            margin: 0 10px 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="layui-container" style="width:90%">
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+        <legend>产品维护</legend>
+    </fieldset>
+    <form class="layui-form" action="/manager/addProduct">
+        <div class="layui-form-item">
+            <label class="layui-form-label">名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" required lay-verify="required" placeholder="请输入名称" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">描述</label>
+            <div class="layui-input-block">
+                <input type="text" name="des" required lay-verify="required" placeholder="请输入描述" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否置顶</label>
+            <div class="layui-input-block">
+                <input type="radio" name="topshow" value="是" title="是">
+                <input type="radio" name="topshow" value="否" title="否" checked>
+            </div>
+        </div>
+        <!--div class="layui-form-item layui-form-text">
+          <label class="layui-form-label">文本域</label>
+          <div class="layui-input-block">
+            <textarea name="des" placeholder="请输入内容" class="layui-textarea"></textarea>
+          </div>
+        </div-->
+        <!--文件上传-开始-->
+        <div id="uploadFile" class="layui-upload" style="display:none;padding-left:100px;padding-bottom: 30px;">
+            <button type="button" class="layui-btn" id="test1">上传图片</button>
+        </div>
+        <!--文件上传结束-->
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit="" id="add" lay-filter="product">保存</button>
+                <button id="readd" type="button" class="layui-btn">添加新产品</button>
+                <button id="backProduct" type="button" class="layui-btn">返回产品列表</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+        <input type="hidden" name="id" id="id" value=""/>
+    </form>
+
+    <div id="imgList">
+
+    </div>
+</div>
+
+<!--轮播图大概 1300X300 px,  产品展示 300X300PX-->
+
+<script src="/js/layui.js?t=1542630986934"></script>
+<script src="/js/utils.js"></script>
+<script>
+    layui.use(['form', 'layer', 'upload'], function () {
+        var form = layui.form
+            , layer = layui.layer, upload = layui.upload;
+        var $ = layui.jquery;
+
+        //监听提交
+        form.on('submit(product)', function (data) {
+            // layer.msg(JSON.stringify(data.field));
+            layui.jquery.post(
+                '/manager/addProduct',
+                data.field,
+                function (res) {
+                    layer.msg(res.msg);
+                    $("#id").val(res.t.id);
+                    $("#uploadFile").show();
+                }
+            );
+            return false;
+        });
+
+        //填充表单数据
+        var id = getParameter("id");
+        if (id > 0) {
+            //显示上传文件
+            $("#uploadFile").show();
+            $.get("/manager/product?id=" + id, function (data, status) {
+                if (data.t == null) return;
+                $("[name='name']").val(data.t.name);
+                $("[name='des']").val(data.t.des);
+                $("[name='topshow']").each(function () {
+                    if ($(this).val() == data.t.topshow) {
+                        $(this).attr("checked", true);
+                    } else {
+                        $(this).attr("checked", false);
+                    }
+                });
+                $("[name='id']").val(data.t.id);
+                //显示图片
+                var files = data.t.fileList;
+                var line;
+                for (var i = 0; files && i < files.length; i++) {
+                    if (0 == i % 3) {
+                        line = $("<div class=\"imageLine\" >");
+                    }
+                    line.append("<div class=\"layui-upload-list\" style='float: left;'>    <img class=\"layui-upload-img\"  alt='产品' src='/upload/download?fileName=" + encodeURIComponent(files[i].fileurl) + "'>" +
+                        "    <p class=\"imgDesc\"></p>" +
+                        "<button class='deleteImg layui-btn' id='" + files[i].id + "'>删除</button></div>")
+                    if (0 == i % 3) {
+                        line.appendTo($("#imgList"));
+                    }
+                }
+                $(".deleteImg").unbind("click").bind("click", function () {
+                    var deleteId = $(this).attr("id");
+                    $.post("/manager/deleteImg?imgId=" + deleteId, function (res) {
+                        window.location.href = "/manager/showProduct?id=" + id
+                    })
+                });
+
+            });
+        }
+        //文件上传
+        var uploadInst = upload.render({
+            elem: '#test1'
+            , url: '/upload/uploadimg'
+            , before: function (obj) {
+                this.data = {"object_id": $("#id").val()}
+                //预读本地文件示例，不支持ie8
+                /*  obj.preview(function (index, file, result) {
+                      $('#demo1').attr('src', result); //图片链接（base64）
+                  });*/
+            }
+            , done: function (res) {
+                //如果上传失败
+                if (res.code > 0) {
+                    return layer.msg('上传失败');
+                } else {//上传成功
+                    window.location.href = "/manager/showProduct?id=" + $("#id").val()
+                }
+
+            }
+            , error: function () {
+                //演示失败状态，并实现重传
+                var demoText = $('#demoText');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function () {
+                    uploadInst.upload();
+                });
+            }
+        });
+
+        //设置返回产品列表按钮
+        $("#backProduct").unbind("click").bind("click", function () {
+            window.location.href = "/manager/";
+        });
+        $("#readd").unbind("click").bind("click", function () {
+            window.location.href = "/manager/showProduct?id=0";
+        });
+
+
+    });
+
+
+</script>
+</body>
+</html>        
