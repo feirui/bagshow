@@ -136,7 +136,7 @@ public class FileController {
 
 			LayUiResult<FileForm> fileForms = fileService.findData(Integer.parseInt(id));
 			String fileName = fileForms.getT().getFileurl();
-			File file = new File(URLDecoder.decode(fileName,"UTF-8"));
+			File file = new File(fileName);
 
 			if (file.exists()) {
 				response.setHeader("content-type", "application/octet-stream");

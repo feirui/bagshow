@@ -23,12 +23,7 @@ public class IndexController {
 	 * @return
 	 */
 	@GetMapping("")
-	public String index(Model model) {
-		LayUiResult<ProductForm> lur = productService.findTopDatas(1,6,"否");
-		LayUiResult<ProductForm> imglur = productService.findTopDatas(1,5,"是");
-		model.addAttribute("productList",lur.getData());
-		model.addAttribute("imgList",imglur.getData());
-		model.addAttribute("productCount",lur.getCount());
+	public String index() {
 		return "index";
 	}
 

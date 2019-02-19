@@ -14,6 +14,6 @@ public class Product {
     private String atime;
     private String mtime;
     private int status;
-    private String topshow;
+    private String topshow ="否";
 
 }

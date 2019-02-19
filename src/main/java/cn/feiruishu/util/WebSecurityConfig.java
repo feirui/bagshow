@@ -2,6 +2,7 @@ package cn.feiruishu.util;
 
 import cn.feiruishu.pojo.SecurityUser;
 import cn.feiruishu.pojo.User;
+import cn.feiruishu.service.LoginFailureHandler;
 import cn.feiruishu.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.authorizeRequests()
                 .antMatchers("/manager","/manager/**").authenticated().
-                and().formLogin().loginPage("/login").defaultSuccessUrl("/manager").permitAll().successHandler(loginSuccessHandler()).
+                and().formLogin().loginPage("/login").defaultSuccessUrl("/manager").failureUrl("/login?failed=true").permitAll().successHandler(loginSuccessHandler()).
                 and().logout().logoutSuccessUrl("/login").permitAll().invalidateHttpSession(true).
                 deleteCookies("JSESSIONID").logoutSuccessHandler(logoutSuccessHandler()).
                 and().sessionManagement().maximumSessions(10).expiredUrl("/login");

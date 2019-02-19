@@ -3,11 +3,13 @@ package cn.feiruishu.controller;
 import cn.feiruishu.pojo.FileForm;
 import cn.feiruishu.pojo.LayUiResult;
 import cn.feiruishu.pojo.Product;
+import cn.feiruishu.pojo.ProductForm;
 import cn.feiruishu.service.FileService;
 import cn.feiruishu.service.ProductService;
 import cn.feiruishu.util.Datetime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -36,7 +38,14 @@ public class ManagrController {
 	 * @return
 	 */
 	@GetMapping("showProduct")
-	public String showProduct(int id) {
+	public String showProduct(int id, Model m) {
+		if(id <= 0){
+			m.addAttribute("product",new Product());
+		}else{
+			LayUiResult<ProductForm> lur = productService.findData(id);
+			m.addAttribute("product",lur.getT());
+		}
+
 		return "product";
 	}
 
@@ -83,6 +92,17 @@ public class ManagrController {
 		}
 	}
 
+	/**
+	 * 添加产品
+	 * @return
+	 */
+	@PostMapping("showImgs")
+	@ResponseBody
+	public LayUiResult<Product> getFilesByProductId(@RequestParam  Map<String,Object> reqMap) {
+		int pro_id = Integer.parseInt(reqMap.get("prop_id").toString());
+		return fileService.findData(1,100,pro_id);
+	}
+
 	private void parseRequest(@RequestParam Map<String, Object> reqMap, Product p) {
 		p.setName(reqMap.get("name").toString());
 		p.setDes(reqMap.get("des").toString());
@@ -93,6 +113,8 @@ public class ManagrController {
 		p.setAtime(Datetime.getCurrentDatetimeByString());
 		p.setMtime(Datetime.getCurrentDatetimeByString());
 	}
+
+
 
 	/**
 	 * 删除产品的图片

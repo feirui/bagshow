@@ -30,26 +30,26 @@
     <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
         <legend>产品维护</legend>
     </fieldset>
-    <form class="layui-form" action="/manager/addProduct">
+    <form class="layui-form" action="/manager/addProduct" th:object="${product}">
         <div class="layui-form-item">
             <label class="layui-form-label">名称</label>
             <div class="layui-input-block">
                 <input type="text" name="name" required lay-verify="required" placeholder="请输入名称" autocomplete="off"
-                       class="layui-input">
+                       class="layui-input" value="" th:field="*{name}">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">描述</label>
             <div class="layui-input-block">
-                <input type="text" name="des" required lay-verify="required" placeholder="请输入描述" autocomplete="off"
-                       class="layui-input">
+                <input type="text" name="des"  required lay-verify="required" placeholder="请输入描述" autocomplete="off"
+                       class="layui-input" th:field="*{des}">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">是否置顶</label>
             <div class="layui-input-block">
-                <input type="radio" name="topshow" value="是" title="是">
-                <input type="radio" name="topshow" value="否" title="否" checked>
+                <input type="radio" name="topshow" value="是" title="是" th:field="*{topshow}">
+                <input type="radio" name="topshow"  value="否" title="否"     th:field="*{topshow}" th:attr="checked=true"  >
             </div>
         </div>
         <!--div class="layui-form-item layui-form-text">
@@ -71,7 +71,7 @@
                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
             </div>
         </div>
-        <input type="hidden" name="id" id="id" value=""/>
+        <input type="hidden" name="id" th:field="*{id}" value=""/>
     </form>
 
     <div id="imgList">
@@ -83,7 +83,7 @@
 
 <script src="/js/layui.js?t=1542630986934"></script>
 <script src="/js/utils.js"></script>
-<script>
+<script th:inline="javascript">
     layui.use(['form', 'layer', 'upload'], function () {
         var form = layui.form
             , layer = layui.layer, upload = layui.upload;
@@ -104,25 +104,39 @@
             return false;
         });
 
-        //填充表单数据
+        //填充图片数据
         var id = getParameter("id");
         if (id > 0) {
             //显示上传文件
             $("#uploadFile").show();
-            $.get("/manager/product?id=" + id, function (data, status) {
-                if (data.t == null) return;
-                $("[name='name']").val(data.t.name);
-                $("[name='des']").val(data.t.des);
-                $("[name='topshow']").each(function () {
-                    if ($(this).val() == data.t.topshow) {
-                        $(this).attr("checked", true);
-                    } else {
-                        $(this).attr("checked", false);
-                    }
-                });
-                $("[name='id']").val(data.t.id);
+
+            //js调用 thymeleaf变量
+            /*<![CDATA[*/
+            var files = /*[[${product.id > 0}?${product.fileList} : [] ]]*/ [];
+            /*]]>*/
+            var line;
+            for (var i = 0; files && i < files.length; i++) {
+                if (0 == i % 3) {
+                    line = $("<div class=\"imageLine\" >");
+                }
+                line.append("<div class=\"layui-upload-list\" style='float: left;'>    <img class=\"layui-upload-img\"  alt='产品' src='/upload/download?fileName=" + encodeURIComponent(files[i].fileurl) + "'>" +
+                    "    <p class=\"imgDesc\"></p>" +
+                    "<button class='deleteImg layui-btn' id='" + files[i].id + "'>删除</button></div>")
+                if (0 == i % 3) {
+                    line.appendTo($("#imgList"));
+                }
+            }
+            $(".deleteImg").unbind("click").bind("click", function () {
+                var deleteId = $(this).attr("id");
+                $.post("/manager/deleteImg?imgId=" + deleteId, function (res) {
+                    window.location.href = "/manager/showProduct?id=" + id
+                })
+            });
+
+           /* $.post("/manager/showImgs?prop_id=" + id, function (data, status) {
+                if (data.data == null) return;
+                var files = data.data;
                 //显示图片
-                var files = data.t.fileList;
                 var line;
                 for (var i = 0; files && i < files.length; i++) {
                     if (0 == i % 3) {
@@ -142,8 +156,9 @@
                     })
                 });
 
-            });
+            });*/
         }
+
         //文件上传
         var uploadInst = upload.render({
             elem: '#test1'
